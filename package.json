@@ -1,0 +1,15 @@
+{
+  "name": "slack-anonymous-serverless",
+  "version": "1.0.0",
+  "description": "A Serverless deployment for presenting anonymous messages in Slack",
+  "main": "app.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "slack",
+    "anonymous"
+  ],
+  "author": "Mandus Momberg",
+  "license": "SEE LICENSE IN LICENSE"
+}
