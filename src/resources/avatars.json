@@ -128,5 +128,16 @@
     "username": "Zoidberg",
     "default_text": "That was bad and you should feel bad.",
     "icon_url": "http://i.imgur.com/XLt6zv1.png"
+  },
+  {
+    "username": "Tony Stark",
+    "default_text": "We have a hulk.",
+    "icon_url": "https://i.imgur.com/yAiOrr6.jpg"
+  },
+  {
+    "username": "Robert Baratheon",
+    "default_text": "Gods, I was strong then.",
+    "icon_url": "https://i.stack.imgur.com/uwi3K.jpg"
   }
+
 ]
