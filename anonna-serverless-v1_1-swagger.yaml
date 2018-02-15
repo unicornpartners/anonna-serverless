@@ -1,0 +1,45 @@
+---
+swagger: "2.0"
+info:
+  version: "2018-02-08T20:37:02Z"
+  title: "anonna-serverless"
+host: "zy1ge8nuob.execute-api.us-west-2.amazonaws.com"
+basePath: "/v1_1"
+schemes:
+- "https"
+paths:
+  /anonamize:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Content-Type"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Content-Type:
+              type: "string"
+  /ganonna:
+    post:
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"

@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Parameters:
+    SlackWebHookUrl:
+        Description: "Slack Web Hook URL"
+        Type: "String"
+    SlackChannel:
+        Description: "Channel where anon is going to be linked to"
+        Type: "String"
+Resources:
+  MyFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: app.anonamize
+      Runtime: nodejs6.10
+      CodeUri: './src'
+      Environment:
+                Variables:
+                    SLACK_WEBHOOK_URL: !Ref SlackWebHookUrl
+                    SLACK_CHANNEL: !Ref SlackChannel
+  MyAPI:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      DefinitionBody: anonna-serverless-v1_1-swagger.yaml
+      Stage: dev

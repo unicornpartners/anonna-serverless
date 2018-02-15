@@ -7,3 +7,8 @@ Resources:
       Handler: app.anonamize
       Runtime: nodejs6.10
       CodeUri: './src'
+  MyAPI:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      DefinitionBody: anonna-serverless-v1_1-swagger.yaml
+      Stage: v1.2
