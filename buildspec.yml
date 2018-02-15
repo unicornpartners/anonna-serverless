@@ -1,7 +1,7 @@
 version: 0.0
 environment_variables:
     plaintext:
-        "INPUT_FILE": "slack-anonymous-tapo.yaml"
+        "INPUT_FILE": "slack-anonymous-tapo.yml"
         "S3_BUCKET": "sam-stuff"
 containers:
     LambdaFunctions:
