@@ -28,6 +28,37 @@ paths:
           headers:
             Content-Type:
               type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Content-Type: "'application/json'"
+            responseTemplates:
+              application/json: "$util.parseJson($input.body)"
+            contentHandling: "CONVERT_TO_TEXT"
+        requestParameters:
+          integration.request.header.Content-Type: "'application/x-www-form-urlencoded'"
+        requestTemplates:
+          application/json: "{\n#foreach( $token in $input.path('$').split('&') )\n\
+            \ #set( $keyVal = $token.split('=') )\n #set( $keyValSize = $keyVal.size()\
+            \ )\n #if( $keyValSize >= 1 )\n  #set( $key = $util.urlDecode($keyVal[0])\
+            \ )\n   #if( $keyValSize >= 2 )\n    #set( $val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\") )\n   #else\n     #set( $val = '' )\n      #end\n \"$key\"\
+            : \"$val\"#if($foreach.hasNext),#end\n            #end\n        #end\n\
+            }"
+          application/x-www-form-urlencoded: "{\n#foreach( $token in $input.path('$').split('&')\
+            \ )\n #set( $keyVal = $token.split('=') )\n #set( $keyValSize = $keyVal.size()\
+            \ )\n #if( $keyValSize >= 1 )\n  #set( $key = $util.urlDecode($keyVal[0])\
+            \ )\n   #if( $keyValSize >= 2 )\n    #set( $val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\") )\n   #else\n     #set( $val = '' )\n      #end\n \"$key\"\
+            : \"$val\"#if($foreach.hasNext),#end\n            #end\n        #end\n\
+            }"
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:513726060493:function:anonna-serverless/invocations"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws"
   /ganonna:
     post:
       consumes:
@@ -39,6 +70,25 @@ paths:
           description: "200 response"
           schema:
             $ref: "#/definitions/Empty"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseTemplates:
+              application/json: "$util.parseJson($input.body)"
+        requestTemplates:
+          application/x-www-form-urlencoded: "{\n#foreach( $token in $input.path('$').split('&')\
+            \ )\n #set( $keyVal = $token.split('=') )\n #set( $keyValSize = $keyVal.size()\
+            \ )\n #if( $keyValSize >= 1 )\n  #set( $key = $util.urlDecode($keyVal[0])\
+            \ )\n   #if( $keyValSize >= 2 )\n    #set( $val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\") )\n   #else\n     #set( $val = '' )\n      #end\n \"$key\"\
+            : \"$val\"#if($foreach.hasNext),#end\n            #end\n        #end\n\
+            }"
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:513726060493:function:ganonna/invocations"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws"
 definitions:
   Empty:
     type: "object"
