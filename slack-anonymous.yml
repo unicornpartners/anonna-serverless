@@ -13,7 +13,7 @@ Resources:
     Properties:
       Handler: app.anonamize
       Runtime: nodejs6.10
-      CodeUri: './api'
+      CodeUri: './src'
       Environment:
                 Variables:
                     SLACK_WEBHOOK_URL: !Ref SlackWebHookUrl
