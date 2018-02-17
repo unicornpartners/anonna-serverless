@@ -25,7 +25,7 @@ Resources:
       StageName: dev
       Variables:
         LambdaFunctionName: !Ref anonna
-ConfigLambdaPermission:
+  ConfigLambdaPermission:
     Type: "AWS::Lambda::Permission"
     DependsOn:
     - anonna
