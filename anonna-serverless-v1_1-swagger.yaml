@@ -2,9 +2,8 @@
 swagger: "2.0"
 info:
   version: "2018-02-08T20:37:02Z"
-  title: "anonna-serverless"
-host: "zy1ge8nuob.execute-api.us-west-2.amazonaws.com"
-basePath: "/v1_1"
+  title: "anonna-serverless-new"
+basePath: "/v1.0"
 schemes:
 - "https"
 paths:

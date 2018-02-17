@@ -25,3 +25,11 @@ Resources:
       StageName: dev
       Variables:
         LambdaFunctionName: !Ref anonna
+ConfigLambdaPermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn:
+    - anonna
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref anonna
+      Principal: apigateway.amazonaws.com
