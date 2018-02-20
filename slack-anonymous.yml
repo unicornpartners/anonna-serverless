@@ -25,6 +25,7 @@ Resources:
   anonnaapi:
     Type: 'AWS::Serverless::Api'
     Properties:
+      StageName: dev
       DefinitionBody:
           'Fn::Transform':
             Name: 'AWS::Include'

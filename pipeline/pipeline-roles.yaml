@@ -84,6 +84,9 @@ Resources:
         - Action: ["cloudformation:CreateChangeSet"]
           Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:aws:transform/Serverless-2016-10-31"
           Effect: Allow
+         - Action: ["cloudformation:CreateChangeSet"]
+          Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:aws:transform/Include"
+          Effect: Allow
       Roles: [!Ref CloudFormationTrustRole]
   CodePipelineTrustRole:
     Description: Creating service role in IAM for AWS CodePipeline
