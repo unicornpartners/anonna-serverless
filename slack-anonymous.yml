@@ -7,6 +7,10 @@ Parameters:
     SlackChannel:
         Description: "Channel where anon is going to be linked to"
         Type: "String"
+    CICDS3BucketName:
+        Description: "S3 Bucket where the Swagger Yaml lives"
+        Type: "String"
+
 Resources:
   anonna:
     Type: 'AWS::Serverless::Function'
@@ -21,10 +25,12 @@ Resources:
   anonnaapi:
     Type: 'AWS::Serverless::Api'
     Properties:
-      DefinitionUri: ./anonna-serverless-v1_1-swagger.yaml
-      StageName: dev
-      Variables:
-        LambdaFunctionName: !Ref anonna
+      DefinitionBody:
+          'Fn::Transform':
+            Name: 'AWS::Include'
+            Parameters:
+              Location:
+                Fn::Sub: s3://${CICDS3BucketName}/anonna-serverless-v1_1-swagger.yaml
   ConfigLambdaPermission:
     Type: "AWS::Lambda::Permission"
     DependsOn:

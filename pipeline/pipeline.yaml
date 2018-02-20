@@ -156,7 +156,7 @@ Resources:
             ChangeSetName: pipeline-changeset
             Capabilities: CAPABILITY_NAMED_IAM
             TemplatePath: !Sub "${AppName}-BuildArtifact::${SAMOutputFile}"
-            ParameterOverrides: !Sub '{"SlackWebHookUrl": "${SlackWebHookUrl}", "SlackChannel": "${SlackChannel}"}'
+            ParameterOverrides: !Sub '{"SlackWebHookUrl": "${SlackWebHookUrl}", "SlackChannel": "${SlackChannel}", "CICDS3BucketName":"${CICDS3BucketName}"}'
           RunOrder: 1
         - Name: execute-changeset
           InputArtifacts: []

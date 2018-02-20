@@ -3,7 +3,7 @@ Description: "Main template for a CI/CD Serverless application."
 Parameters:
   AppName:
     Type: String
-    Description: Name of the application.
+    Description: Name of the application
     MinLength: "1"
     MaxLength: "80"
     AllowedPattern: "[A-Za-z0-9-]+"
