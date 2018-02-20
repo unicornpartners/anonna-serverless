@@ -11,7 +11,7 @@ Parameters:
   SAMInputFile:
     Type: String
     Description: The filename for the SAM file.
-    Default: slack-anonymous.yaml
+    Default: slack-anonymous.yml
   SAMOutputFile:
     Type: String
     Description: The filename for the output SAM file from the buildspec file.
