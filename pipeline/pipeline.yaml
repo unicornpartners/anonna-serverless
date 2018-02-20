@@ -64,7 +64,7 @@ Resources:
           - Name: S3_BUCKET
             Value: !Ref S3Bucket
           - Name: INPUT_FILE
-            Value: !SAMInputFile
+            Value: !Ref SAMInputFile
         Image: !Ref CodeBuildImage
         Type: LINUX_CONTAINER
       Name: !Sub "${AppName}-build"
