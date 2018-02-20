@@ -68,6 +68,7 @@ Resources:
         GitHubRepoBranch: !Ref GitHubRepoBranch
         GitHubUser: !Ref GitHubUser
         GitHubToken: !Ref GitHubToken
+        CICDS3BucketName: !Ref CICDS3BucketName
         CodePipelineRole: !GetAtt ServerlessRoles.Outputs.CodePipelineRole
         CloudformationRole: !GetAtt ServerlessRoles.Outputs.CloudformationDeployRole
         CodeBuildRole: !GetAtt ServerlessRoles.Outputs.CodeBuildRole
