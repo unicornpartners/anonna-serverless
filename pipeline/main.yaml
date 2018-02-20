@@ -16,14 +16,21 @@ Parameters:
     Type: String
     Description: The filename for the output SAM file from the buildspec file.
     Default: post-saml.yaml
-  StagingFile:
+  SlackWebHookUrl:
     Type: String
-    Description: The cloudformation staging file. Leave empty if no staging file is needed.
-    Default: beta.json
+    Description: Slack WebHook URl
+  SlackChannel:
+    Type: String
+    Description: Slack channel
+    Default: "testing1"
   CodeBuildImage:
     Type: String
     Default: "aws/codebuild/nodejs:4.3.2"
     Description: Image used for CodeBuild project.
+  CICDS3BucketName:
+    Type: String
+    Default: "anon-cicd"
+    Description: S3 Bucket where the pipeline templates live
   GitHubRepoName:
     Type: String
     Description: The GitHub repo name
@@ -44,7 +51,8 @@ Resources:
     Properties:
       Parameters:
         AppName: !Ref AppName
-      TemplateURL: "https://s3-us-west-2.amazonaws.com/anon-cicd/templates/pipeline-roles.yaml"
+      TemplateURL:
+        Fn::Sub: https://${CICDS3BucketName}.s3.amazonaws.com/templates/pipeline-roles.yaml
   ServerlessPipeline:
     Type: "AWS::CloudFormation::Stack"
     DependsOn: [ServerlessRoles]
@@ -53,7 +61,8 @@ Resources:
         AppName: !Ref AppName
         SAMInputFile: !Ref SAMInputFile
         SAMOutputFile: !Ref SAMOutputFile
-        StagingFile: !Ref StagingFile
+        SlackWebHookUrl: !Ref SlackWebHookUrl
+        SlackChannel: !Ref SlackChannel
         CodeBuildImage: !Ref CodeBuildImage
         GitHubRepoName: !Ref GitHubRepoName
         GitHubRepoBranch: !Ref GitHubRepoBranch
@@ -62,4 +71,5 @@ Resources:
         CodePipelineRole: !GetAtt ServerlessRoles.Outputs.CodePipelineRole
         CloudformationRole: !GetAtt ServerlessRoles.Outputs.CloudformationDeployRole
         CodeBuildRole: !GetAtt ServerlessRoles.Outputs.CodeBuildRole
-      TemplateURL: "https://s3-us-west-2.amazonaws.com/anon-cicd/templates/pipeline.yaml"
+      TemplateURL:
+        Fn::Sub: https://${CICDS3BucketName}.s3.amazonaws.com/templates/pipeline.yaml

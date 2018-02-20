@@ -10,7 +10,6 @@ paths:
   /anonamize:
     post:
       consumes:
-      - "application/json"
       - "application/x-www-form-urlencoded"
       produces:
       - "application/json"
@@ -39,13 +38,6 @@ paths:
         requestParameters:
           integration.request.header.Content-Type: "'application/x-www-form-urlencoded'"
         requestTemplates:
-          application/json: "{\n#foreach( $token in $input.path('$').split('&') )\n\
-            \ #set( $keyVal = $token.split('=') )\n #set( $keyValSize = $keyVal.size()\
-            \ )\n #if( $keyValSize >= 1 )\n  #set( $key = $util.urlDecode($keyVal[0])\
-            \ )\n   #if( $keyValSize >= 2 )\n    #set( $val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
-            \\\\'\",\"'\") )\n   #else\n     #set( $val = '' )\n      #end\n \"$key\"\
-            : \"$val\"#if($foreach.hasNext),#end\n            #end\n        #end\n\
-            }"
           application/x-www-form-urlencoded: "{\n#foreach( $token in $input.path('$').split('&')\
             \ )\n #set( $keyVal = $token.split('=') )\n #set( $keyValSize = $keyVal.size()\
             \ )\n #if( $keyValSize >= 1 )\n  #set( $key = $util.urlDecode($keyVal[0])\
@@ -53,7 +45,8 @@ paths:
             \\\\'\",\"'\") )\n   #else\n     #set( $val = '' )\n      #end\n \"$key\"\
             : \"$val\"#if($foreach.hasNext),#end\n            #end\n        #end\n\
             }"
-        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:513726060493:function:${stageVariables.LambdaFunctionName}/invocations"
+        uri: 
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${anonna.Arn}/invocations"
         passthroughBehavior: "when_no_templates"
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"

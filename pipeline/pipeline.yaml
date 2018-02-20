@@ -16,10 +16,12 @@ Parameters:
     Type: String
     Description: The filename for the output SAM file from the buildspec file.
     Default: post-saml.yaml
-  StagingFile:
+  SlackWebHookUrl:
     Type: String
-    Description: The cloudformation staging file. Leave empty if no staging file is needed.
-    Default: beta.json
+    Description: Slack WebHook URl
+  SlackChannel:
+    Type: String
+    Description: Slack channel
   CodeBuildImage:
     Type: String
     Default: "aws/codebuild/nodejs:4.3.2"
@@ -47,10 +49,6 @@ Parameters:
   CodeBuildRole:
     Type: String
     Description: Role for code build
-Conditions:
-  HasStagingVariables:
-    !Not
-      - !Equals [!Ref StagingFile, ""]
 Resources:
   CodeBuildProject:
     DependsOn: [S3Bucket]
@@ -65,6 +63,8 @@ Resources:
         EnvironmentVariables:
           - Name: S3_BUCKET
             Value: !Ref S3Bucket
+          - Name: INPUT_FILE
+            Value: !SAMInputFile
         Image: !Ref CodeBuildImage
         Type: LINUX_CONTAINER
       Name: !Sub "${AppName}-build"
@@ -159,7 +159,7 @@ Resources:
             ChangeSetName: pipeline-changeset
             Capabilities: CAPABILITY_NAMED_IAM
             TemplatePath: !Sub "${AppName}-BuildArtifact::${SAMOutputFile}"
-            TemplateConfiguration: !If [ HasStagingVariables, !Sub "${AppName}-BuildArtifact::${StagingFile}", "" ]
+            ParameterOverrides: !Sub '{"SlackWebHookUrl": "${SlackWebHookUrl}", "SlackChannel": "${SlackChannel}"}'
           RunOrder: 1
         - Name: execute-changeset
           InputArtifacts: []
