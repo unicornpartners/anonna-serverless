@@ -1,9 +1,42 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
+Parameters:
+    SlackWebHookUrl:
+        Description: "Slack Web Hook URL"
+        Type: "String"
+    SlackChannel:
+        Description: "Channel where anon is going to be linked to"
+        Type: "String"
+    CICDS3BucketName:
+        Description: "S3 Bucket where the Swagger Yaml lives"
+        Type: "String"
+
 Resources:
-  MyFunction:
+  anonna:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: app.anonamize
       Runtime: nodejs6.10
       CodeUri: './src'
+      Environment:
+                Variables:
+                    SLACK_WEBHOOK_URL: !Ref SlackWebHookUrl
+                    SLACK_CHANNEL: !Ref SlackChannel
+  anonnaapi:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: dev
+      DefinitionBody:
+          'Fn::Transform':
+            Name: 'AWS::Include'
+            Parameters:
+              Location:
+                Fn::Sub: s3://${CICDS3BucketName}/anonna-serverless-v1_1-swagger.yaml
+  ConfigLambdaPermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn:
+    - anonna
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref anonna
+      Principal: apigateway.amazonaws.com
