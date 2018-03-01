@@ -1,7 +1,7 @@
 Anonymous messages in Slack using AWS Lambda and AWS API Gateway
 ================================================================
 
-## Outstanding
+### Outstanding
 - Finish AWS SAM Templates
 - Automate Deployment of CodePipeline
 
