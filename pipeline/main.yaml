@@ -31,6 +31,15 @@ Parameters:
     Type: String
     Default: "anon-cicd"
     Description: S3 Bucket where the pipeline templates live
+ S3KeyPrefix:
+    AllowedPattern: ^[0-9a-zA-Z-/]*$
+    ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters,
+      uppercase letters, hyphens (-), and forward slash (/).
+    Default: prod/
+    Description: S3 key prefix for the pipeline assets. Key prefix
+      can include numbers, lowercase letters, uppercase letters, hyphens (-), and
+      forward slash (/).
+    Type: String
   GitHubRepoName:
     Type: String
     Description: The GitHub repo name
@@ -52,7 +61,7 @@ Resources:
       Parameters:
         AppName: !Ref AppName
       TemplateURL:
-        Fn::Sub: https://${CICDS3BucketName}.s3.amazonaws.com/templates/pipeline-roles.yaml
+        Fn::Sub: https://${CICDS3BucketName}.s3.amazonaws.com/${S3KeyPrefix}templates/pipeline-roles.yaml
   ServerlessPipeline:
     Type: "AWS::CloudFormation::Stack"
     DependsOn: [ServerlessRoles]
@@ -73,4 +82,4 @@ Resources:
         CloudformationRole: !GetAtt ServerlessRoles.Outputs.CloudformationDeployRole
         CodeBuildRole: !GetAtt ServerlessRoles.Outputs.CodeBuildRole
       TemplateURL:
-        Fn::Sub: https://${CICDS3BucketName}.s3.amazonaws.com/templates/pipeline.yaml
+        Fn::Sub: https://${CICDS3BucketName}.s3.amazonaws.com/${S3KeyPrefix}templates/pipeline.yaml

@@ -120,6 +120,7 @@ Resources:
           Configuration:
             Repo: !Ref GitHubRepoName
             Branch: !Ref GitHubRepoBranch
+            PollForSourceChanges: true
             OAuthToken: !Ref GitHubToken
             Owner: !Ref GitHubUser
           RunOrder: 1
