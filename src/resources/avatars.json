@@ -1,5 +1,10 @@
 [
   {
+    "username": "Matt Y",
+    "default_text": "Play with your junk!",
+    "icon_url": "https://unicorn-artifacts.s3-us-west-2.amazonaws.com/img/myan.jpg"
+  },
+  {
     "username": "Archer",
     "default_text": "Phrasing!",
     "icon_url": "http://i.imgur.com/CyIgnqi.png"

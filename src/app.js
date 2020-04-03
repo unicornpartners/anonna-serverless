@@ -15,8 +15,6 @@ function formatResponse(avatar,text){
         text: text,
         username: `${avatar.username}: ${avatar.default_text}`,
         icon_url: avatar.icon_url,
-        response_type: 'in_channel',
-        as_user: false,
         channel: process.env['SLACK_CHANNEL']
     };
     return resp;
@@ -60,7 +58,8 @@ function postToWebhook(response,callback){
         port: '443',
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'User-Agent': 'aws/lambda'
         }
     };
     let request = http.request(opts,function(res){
@@ -69,6 +68,7 @@ function postToWebhook(response,callback){
             if( chunk == 'ok'){
                 callback(null,JSON.stringify({text: `Thank you. Your message: "${response.text}" will be posted in #${response.channel} as ${response.username.split(':')[0]}`}));
             } else {
+                console.error(chunk);
                 callback(JSON.stringify({text: 'Something went wrong, please try again.'}));
             }
         });
@@ -82,6 +82,7 @@ function postToWebhook(response,callback){
 }
 
 exports.anonamize = (event,context,callback) => {
+    console.info(event);
     console.info('Receiving Anonamization Request');
 
     let txtCommand = event.text.split(" ", 1);
@@ -128,4 +129,3 @@ exports.anonamize = (event,context,callback) => {
     
     
 };
-
